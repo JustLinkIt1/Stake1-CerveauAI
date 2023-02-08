@@ -10,14 +10,11 @@ import { ref } from "vue";
 import { useAsyncState, useEventBus } from "@vueuse/core";
 import { notify } from "notiwind";
 import IconJoe from "@/assets/icons/joe.svg";
-
 const joeLinks = [
-
   {
     icon: IconJoe,
     href: "https://traderjoexyz.com/avalanche/pool/v1/AVAX/0xc94f5c4a091418d03ff1989b48db3139d1af0d25",
   } ];
-
 const { on: onAppEvent, emit: emitAppEvent } = useEventBus("app");
 const { address, isAuthenticated, isAuthenticating, login } = useUser();
 const { symbolJLP, allowanceJLP, approveJLP, balanceOfJLP } =
@@ -25,9 +22,7 @@ const { symbolJLP, allowanceJLP, approveJLP, balanceOfJLP } =
 const { symbolBucks, balanceOfBucks } = useBucksContract(address);
 const { myDepositedLP, pendingRewards, depositLP, withdrawMyLPAndRewards } =
   useRewarderContract(address);
-
 const JLPCount = ref(0)
-
 const loadAllowanceState = async () => {
   try {
     const [_symbolBucks, _symbolJLP, _allowanceJLP] = await Promise.all([
@@ -35,7 +30,6 @@ const loadAllowanceState = async () => {
       symbolJLP(),
       loadUserAllowance(),
     ]);
-
     return Promise.resolve({
       symbolBucks: _symbolBucks,
       symbolJLP: _symbolJLP,
@@ -54,25 +48,19 @@ const loadAllowanceState = async () => {
     allowanceJLP: 0,
   });
 };
-
 const loadUserAllowance = async () => {
   if (!isAuthenticated.value) return 0;
-
   const _allowanceJLP = await allowanceJLP();
   return Promise.resolve(_allowanceJLP);
 };
-
 const { state: allowanceState, execute: loadAllowance } = useAsyncState(
   () => loadAllowanceState(),
   {},
   { resetOnExecute: false }
 );
-
 const approvalPending = ref(false);
 const stakePending = ref(false);
 const withdrawPending = ref(false);
-
-
 const setApprove = async (_count) => {
   approvalPending.value = true;
   try {
@@ -97,7 +85,6 @@ const setApprove = async (_count) => {
     approvalPending.value = false;
   }
 };
-
 const withdrawAll = async () => {
   withdrawPending.value = true;
   try {
@@ -120,9 +107,6 @@ const withdrawAll = async () => {
     withdrawPending.value = false;
   }
 };
-
-
-
 const depositThatLP = async (_counter) => {
   stakePending.value = true;
   try {
@@ -145,13 +129,9 @@ const depositThatLP = async (_counter) => {
     stakePending.value = false;
   }
 };
-
-
-
 const loadContractState = async () => {
   try {
     const [user] = await Promise.all([loadUserState()]);
-
     return Promise.resolve({
       ...user,
     });
@@ -159,7 +139,6 @@ const loadContractState = async () => {
     console.log(error);
   }
 };
-
 const loadUserState = async () => {
   if (!isAuthenticated.value)
     return Promise.resolve({
@@ -176,13 +155,11 @@ const loadUserState = async () => {
         balanceOfJLP(),
         pendingRewards(),
       ]);
-
     return Promise.resolve({
       myDepositedLP: _myDepositedLP,
       balanceOfBucks: _balanceOfBucks,
       balanceOfJLP: _balanceOfJLP,
       pendingRewards: _pendingRewards,
-
     });
   } catch (error) {
     console.log("----------------------------------------------------------");
@@ -196,13 +173,11 @@ const loadUserState = async () => {
     pendingRewards: 0,
   });
 };
-
 const { state, execute: loadStats } = useAsyncState(
   () => loadContractState(),
   {},
   { resetOnExecute: false }
 );
-
 onAppEvent(({ type }) => {
   const events = {
     accountsChanged: () => {
@@ -214,28 +189,24 @@ onAppEvent(({ type }) => {
       loadStats();
     },
   };
-
   events[type]?.() ?? null;
 });
 </script>
-
 <template>
   <div class="self-center w-full py-12 px-2 max-w-[1400px] mx-auto px-4">
     <div class="flex flex-wrap justify-between items-center">
       <div class="text-center mx-auto md:mx-0 font-celaraz">
         <div class="font-black text-5xl text-blue-300">
-          Cerveau AI $BUCKS Farm
+        
+          🧠 $Bucks Liquidity Farm 🚜
         </div>
         <div class="text-2xl text-blue-300">Deposit JLP to earn rewards</div>
-        <div class="mt-2 mb-8 text-xs text-blue-200">
+        <div class="mt-2 mb-10 text-xs text-blue-1200">
           150,000 $BUCKS rewards over 60 days
         </div>
       </div>
-
       <template v-if="isAuthenticated">
         <div class="max-w-[300px] text-center grid gap-4 mx-auto md:mx-0">
-
-
           <Button
             :loading="approvalPending"
             :disabled="approvalPending || !isAuthenticated || isAuthenticating"
@@ -248,8 +219,6 @@ onAppEvent(({ type }) => {
             {{ allowanceState.allowanceJLP === 0 ? "Approve" : "Revoke" }} $JLP
             spending
           </Button>
-
-
           <Button
             :disabled="!allowanceState.allowanceJLP || stakePending || state.balanceOfJLP==0"
             :loading="stakePending"
@@ -257,7 +226,6 @@ onAppEvent(({ type }) => {
           >
             Stake All BUCKS/AVAX JLP
           </Button>
-
           <Button 
             :disabled="state.myDepositedLP==0 || withdrawPending" 
             :loading="withdrawPending"
@@ -265,8 +233,6 @@ onAppEvent(({ type }) => {
           >
             Withdraw All LP and Rewards
           </Button>
-
-
           <div class="text-left self-end">
             <div class="text-xs">
               $JLP amount to deposit
