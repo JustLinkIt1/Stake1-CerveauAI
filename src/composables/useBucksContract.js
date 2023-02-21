@@ -17,7 +17,7 @@ export default (address) => {
     await contract
       .balanceOf(payload ?? address.value)
       .then((response) =>
-        Number(ethers.utils.formatEther(response))
+        Number(ethers.utils.formatEther(response)).toFixed(2)
       );
 
   userStore.$onAction(({ name, after }) => {
