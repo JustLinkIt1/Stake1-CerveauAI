@@ -279,7 +279,7 @@ onAppEvent(({ type }) => {
         class="px-6 py-4 shadow-sm bg-gradient-to-tr from-red-200/10 rounded-2xl flex justify-between items-center"
       >
         <div class="text-xs font-celaraz">My $BUCKS balance</div>
-        <div class="font-bold">{{ state.balanceOfBucks }} $BUCKS</div>
+        <div class="font-bold">{{ state.balanceOfBucks }}.toFixed(2) $BUCKS</div>
       </div>
     </div>
     <div class="mt-4 text-xs text-center flex flex-wrap gap-2 md:gap-6 italic">
