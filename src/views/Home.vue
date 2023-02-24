@@ -261,26 +261,30 @@ onAppEvent(({ type }) => {
         class="px-6 py-4 shadow-sm bg-gradient-to-tr from-red-200/10 rounded-2xl flex justify-between items-center"
       >
         <div class="text-xs font-celaraz">My Staked JLP</div>
-        <div class="font-bold">{{ state.myDepositedLP }} $JLP</div>
+        <div class="font-bold">{{ state.myDepositedLP.toFixed(2) }} $JLP</div>
       </div>
       <div
         class="px-6 py-4 shadow-sm bg-gradient-to-tr from-red-200/10 rounded-2xl flex justify-between items-center"
       >
         <div class="text-xs font-celaraz">My Claimable Rewards</div>
-        <div class="font-bold">{{ state.pendingRewards }} $BUCKS</div>
+        <div class="font-bold">{{ state.pendingRewards.toFixed(2) }} $BUCKS</div>
       </div>
       <div
         class="px-6 py-4 shadow-sm bg-gradient-to-tr from-red-200/10 rounded-2xl flex justify-between items-center"
       >
         <div class="text-xs font-celaraz">My $JLP balance</div>
-        <div class="font-bold">{{ state.balanceOfJLP }} $JLP</div>
+        <div class="font-bold">{{ state.balanceOfJLP.toFixed(2) }} $JLP</div>
       </div>
       <div
         class="px-6 py-4 shadow-sm bg-gradient-to-tr from-red-200/10 rounded-2xl flex justify-between items-center"
       >
         <div class="text-xs font-celaraz">My $BUCKS balance</div>
-        <div class="font-bold">{{ state.balanceOfBucks }} $BUCKS</div>
+        <div class="font-bold">{{ state.balanceOfBucks.toFixed(2) }} $BUCKS</div>
       </div>
+      <div class="px-6 py-4 shadow-sm bg-gradient-to-tr from-red-200/10 rounded-2xl flex justify-between items-center">
+    <div class="text-xs font-celaraz">Current APR*</div>
+    <div class="font-bold" id="apr">{{ apr || "Coming Soon..." }} </div>
+  </div>
     </div>
     <div class="mt-4 text-xs text-center flex flex-wrap gap-2 md:gap-6 italic">
       <div class="text-blue-200">
@@ -297,6 +301,12 @@ onAppEvent(({ type }) => {
     </a>
       <div class="text-blue-200">
         Earn $BUCKS rewards split among all LP stakers.
+      </div>
+      <div class="text-blue-200">
+        Powered by https://snowtrace.io APIs
+      </div>
+      <div class="text-blue-200">
+        * Warning: Current Rewards Shown over 365 day period, Current $Bucks rewards rate set for a 60 day period.
       </div>
     </div>
   </div>
